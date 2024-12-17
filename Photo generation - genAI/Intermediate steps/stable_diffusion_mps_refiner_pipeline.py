@@ -22,7 +22,7 @@ refiner.to("mps")
 n_steps = 20
 high_noise_frac = 0.8
 
-prompt = "realistic photo of a pretty boy"
+prompt = "realistic photo of a pretty flower"
 
 image = base(
     prompt=prompt,
