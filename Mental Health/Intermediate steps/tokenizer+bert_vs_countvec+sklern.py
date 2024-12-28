@@ -121,7 +121,8 @@ print("Random Forest Accuracy:", acc)
 print("Random Forest Classification Report:\n", classification_report(test_labels, predictions))
 
 
-'''BERT Accuracy: 0.2360813704496788
+'''
+BERT Accuracy: 0.2360813704496788
 BERT Classification Report:
                precision    recall  f1-score   support
 
@@ -145,4 +146,5 @@ Random Forest Classification Report:
 
     accuracy                           0.88      3736
    macro avg       0.88      0.88      0.88      3736
-weighted avg       0.88      0.88      0.88      3736 '''
+weighted avg       0.88      0.88      0.88      3736 
+'''
