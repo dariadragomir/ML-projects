@@ -6,6 +6,7 @@ prices = np.load('data/prices.npy')
 
 training_data, prices = shuffle(training_data, prices, random_state=0)
 '''The first 4 samples are:
+
   [[2.0150e+03 4.1000e+04 1.9670e+01 1.5820e+03 1.2620e+02 5.0000e+00
   1.0000e+00 0.0000e+00 1.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
   1.0000e+00 0.0000e+00]
