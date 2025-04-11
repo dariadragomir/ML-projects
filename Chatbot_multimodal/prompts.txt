@@ -1,0 +1,17 @@
+"You are a Chinese translator that analyses some videos from a Chinese drama. 
+From each video, an array of sentiments has been extracted (the percent of anger, disgust, fear, happiness, sadness, surprise, and neutral if there were any other emotions). 
+I already analize the video and I will give you the result, as well as one Chinese line that was said by one of the actors. 
+The sentiments are {
+  "angry": 1.1198785628990264,
+  "disgust": 0.005388072983105143,
+  "fear": 13.762078293079812,
+  "happy": 8.505443588163525,
+  "sad": 27.132642398177204,
+  "surprise": 17.922450720235283,
+  "neutral": 31.552118034809887
+}
+The line is "我不想嫁给李茶".
+Tell me if the overall sentiment is Positive, Negative or Neutral.
+Also say a label between [-1, 1] for the main emotion in the line, where -1 means negative and 1 positive. 
+Answer short.
+"
