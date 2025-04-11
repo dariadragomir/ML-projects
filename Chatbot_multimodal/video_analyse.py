@@ -45,37 +45,46 @@ def process_video(video_path, output_predictions):
     if not cap.isOpened():
         print(f"Error opening video: {video_path}")
         return predictions
-    
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    if fps == 0:
-        print(f"FPS not found for video: {video_path}. Skipping...")
+
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    if total_frames < 30:
+        print(f"Video {video_path} has less than 30 frames. Skipping...")
+        cap.release()
         return predictions
 
-    current_frame = 0
-    sec = 0
-    
-    while cap.isOpened():
+    frame_indices = np.linspace(0, total_frames - 1, 30, dtype=int)
+
+    for idx in frame_indices:
+        cap.set(cv2.CAP_PROP_POS_FRAMES, idx)
         ret, frame = cap.read()
         if not ret:
-            break
+            print(f"Could not read frame {idx} in {video_path}. Skipping...")
+            continue
 
-        if current_frame >= sec * fps:
-            timestamp = sec  # Timestamp in seconds
-            sentiment_scores = predict_sentiment(frame)
-            predictions.append({
-                "timestamp_sec": timestamp,
-                "sentiment": sentiment_scores
-            })
-            sec += 1
-        
-        current_frame += 1
+        sentiment_scores = predict_sentiment(frame)
+        predictions.append(sentiment_scores)
 
     cap.release()
-    
+
+    all_emotions = {k: [] for k in predictions[0].keys()}
+    for pred in predictions:
+        for emotion, score in pred.items():
+            all_emotions[emotion].append(score)
+
+    mean_emotions = {emotion: float(np.mean(scores)) for emotion, scores in all_emotions.items()}
+    print(f"Mean emotions for {os.path.basename(video_path)}:")
+    print(json.dumps(mean_emotions, indent=2))
+
+    output_data = {
+        "frame_predictions": predictions,
+        "mean_emotions": mean_emotions
+    }
+
     with open(output_predictions, "w") as outfile:
-        json.dump(predictions, outfile, indent=2)
-    
+        json.dump(output_data, outfile, indent=2)
+
     return predictions
+
 
 def split_train_test(video_paths, train_ratio=0.8):
     random.shuffle(video_paths)
